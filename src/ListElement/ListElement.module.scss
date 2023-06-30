@@ -1,0 +1,58 @@
+.element {
+   width: 938px;
+   height: 140px;
+   box-shadow: #000000 0 4px 12px;
+   border: 1px solid transparent;
+}
+
+.header{
+ line-height: 28px;
+ color: #1890FF;
+ font-weight: 400;
+}
+.like{
+   margin-top: 10px;
+   margin-left: 16px;
+}
+
+.count{
+   margin-top: 6px;
+   margin-left: 10px;
+}
+.profile{
+   margin-top: 15px;
+   margin-right: 15px;
+   width: 135px;
+   height: 46px;
+display: grid;
+grid-template-areas: 'nameArea pic'
+                        'date pic';
+}
+
+.name{
+   grid-area: nameArea;
+   line-height: 28px;
+}
+
+.date{
+   grid-area:date;
+   line-height: 22px;
+}
+
+.defaultPicture{
+   grid-area:pic;
+}
+.title{
+   height: 28px;
+   margin-top: 16px;
+   margin-left: 16px;
+   max-width: 500px;
+   border: 1px solid black;
+   display: flex;
+   align-items: center;
+}
+
+.wrap{
+   display: flex;
+   justify-content: space-between;
+}
