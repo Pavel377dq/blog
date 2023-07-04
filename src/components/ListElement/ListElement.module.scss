@@ -3,15 +3,18 @@
    height: 140px;
    box-shadow: #000000 0 4px 12px;
    border: 1px solid transparent;
+   margin-bottom: 20px;
+   background-color: white;
 }
 
 .header{
  line-height: 28px;
+ font-size: 20px;
  color: #1890FF;
  font-weight: 400;
 }
 .like{
-   margin-top: 10px;
+   margin-top: 6px;
    margin-left: 16px;
 }
 
@@ -32,11 +35,13 @@ grid-template-areas: 'nameArea pic'
 .name{
    grid-area: nameArea;
    line-height: 28px;
+   font-size: 18px;
 }
 
 .date{
    grid-area:date;
    line-height: 22px;
+   font-size: 12px;
 }
 
 .defaultPicture{
@@ -47,7 +52,6 @@ grid-template-areas: 'nameArea pic'
    margin-top: 16px;
    margin-left: 16px;
    max-width: 500px;
-   border: 1px solid black;
    display: flex;
    align-items: center;
 }
@@ -55,4 +59,19 @@ grid-template-areas: 'nameArea pic'
 .wrap{
    display: flex;
    justify-content: space-between;
+}
+
+.text{
+   width: 682px;
+   font-size: 12px;
+   line-height: 22px;
+   margin: 0;
+   margin-left: 16px;
+   
+}
+
+.tags{
+
+  margin-left: 16px;
+  margin-bottom: 2px;
 }
