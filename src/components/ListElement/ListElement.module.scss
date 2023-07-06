@@ -25,7 +25,7 @@
 .profile{
    margin-top: 15px;
    margin-right: 15px;
-   width: 135px;
+   width: 170px;
    height: 46px;
 display: grid;
 grid-template-areas: 'nameArea pic'
@@ -44,8 +44,11 @@ grid-template-areas: 'nameArea pic'
    font-size: 12px;
 }
 
-.defaultPicture{
+.picture{
    grid-area:pic;
+   width: 46px;
+   height: 46px;
+   border-radius: 50%;
 }
 .title{
    height: 28px;

@@ -1,36 +1,41 @@
 import React from "react";
 import styles from "./ListElement.module.scss";
 import emptyHeart from "./emptyHeart.svg";
-import profileDefault from "./profileDefault.svg";
+//import profileDefault from "./profileDefault.svg";
+import {format} from "date-fns"
 import { Tag } from "antd";
-export const ListElement = () => {
+export const ListElement = ({author, createdAt, description, tagList, favoritesCount, slug, title}) => {
+
+  const tags = tagList.map((item)=>{
+
+    return <Tag>{item}</Tag>
+  });
+
+  const createDate = format(new Date(createdAt),'MMMM dd, yyyy');
   return (
     <div className={styles.element}>
       <div className={styles.wrap}>
         <div className={styles.title}>
-          <h1 className={styles.header}>Some article title </h1>
+          <h1 className={styles.header}>{title} </h1>
           <img src={emptyHeart} className={styles.like} alt="non active like" />
-          <span className={styles.count}>12</span>
+          <span className={styles.count}>{favoritesCount}</span>
         </div>
         <div className={styles.profile}>
-          <span className={styles.name}>Bob Lock</span>
-          <span className={styles.date}>March 6. 2020</span>
+          <span className={styles.name}>{author.username}</span>
+          <span className={styles.date}>{createDate}</span>
           <img
-            src={profileDefault}
-            className={styles.defaultPicture}
+            src={author.image}
+            className={styles.picture}
             alt="default"
           />
         </div>
       </div>
       <div className={styles.tags}>
-        <Tag>Tag 1</Tag>
-        <Tag>Tag 2</Tag>
+        {tags}
       </div>
 
       <p className={styles.text}>
-        Commodo velit proident sunt aliqua consectetur aliqua minim culpa.
-        Labore velit anim nostrud consectetur eu deserunt. Tempor culpa
-        Commodo velit proident sunt aliqua consectetur aliqua minim culpa.
+        {description}
        {" "}
       </p>
     </div>
