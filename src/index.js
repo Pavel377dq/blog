@@ -3,13 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import { reducerArticles } from './redux/redusers/reducerArticles';
-import reduxThunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit'
+import articleListReducer from './redux/store/articleListSlice'
+//import reducer from './redux/store/articleListSlice'
+//import { createStore, applyMiddleware } from 'redux';
+//import { reducerArticles } from './redux/redusers/reducerArticles';
+//import reduxThunk from 'redux-thunk';
 
 
-const store = createStore(reducerArticles, applyMiddleware(reduxThunk));
+//const store = createStore(reducerArticles, applyMiddleware(reduxThunk));
+const store = configureStore({
 
+  reducer: {
+    articleList: articleListReducer}})
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
  // <React.StrictMode>

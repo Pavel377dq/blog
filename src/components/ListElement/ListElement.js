@@ -6,10 +6,10 @@ import {format} from "date-fns"
 import { Tag } from "antd";
 export const ListElement = ({author, createdAt, description, tagList, favoritesCount, slug, title}) => {
 
-  const tags = tagList.map((item)=>{
+  const tags = tagList?tagList.map((item)=>{
 
     return <Tag>{item}</Tag>
-  });
+  }):null
 
   const createDate = format(new Date(createdAt),'MMMM dd, yyyy');
   return (

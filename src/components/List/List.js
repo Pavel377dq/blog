@@ -2,26 +2,47 @@ import React from "react";
 import styles from "./List.module.scss"
 import { ListElement } from "../ListElement/ListElement";
 import { useSelector } from "react-redux";
-import * as selectors from "../../redux/selectors";
+//import * as selectors from "../../redux/selectors";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { loadArticles, setPage } from "../../redux/actions";
-import { Pagination } from "antd";
+//import { loadArticles, setPage } from "../../redux/actions";
+import { Pagination, Spin,Alert } from "antd";
+import {
+   fetchArticles,
+   selectAllArticles,
+   selectArticlesCount,
+   selectCurrentPage,
+   setCurrentPage,
+   selectStatus,
+   selectError
+ } from '../../redux/store/articleListSlice';
 
 export const List = () => {
 
-   const articles = useSelector(selectors.articles);
-   const page = useSelector(selectors.page);
+   const articles = useSelector(selectAllArticles);
+   const page = useSelector(selectCurrentPage);
+   const status = useSelector(selectStatus);
+   const error = useSelector(selectError);
    const dispatch = useDispatch();
 
    
 useEffect(()=>{
-   dispatch(loadArticles(page))
+   dispatch(fetchArticles(page))
  },[page]);
 
 
+
+ if(status === 'pending'){
+
+   return  <Spin size="large" />
+ }
+
+ if(status === 'rejected'){
+   return   <Alert message="Error" description={error} type="error" showIcon />
+ }
+
  const handlerOnChangePage = (page) => {
-   dispatch(setPage(page));
+   dispatch(setCurrentPage(page));
 
    window.scrollTo({
      top: 0,
@@ -33,10 +54,10 @@ useEffect(()=>{
 
    console.log(articles,'IN LIST');
 
-   const list = articles.map((item)=>{
+   const list = articles? articles.map((item)=>{
 
       return <ListElement {...item}/>
-   })
+   }):null;
    return (
 
       <div className={styles.list}>
