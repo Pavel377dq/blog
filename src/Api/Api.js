@@ -15,5 +15,16 @@ export const api = {
       //console.log(articles);
       //return articles;
 
+   },
+
+   async getArticle(slug){
+      const response = await fetch(`${this.baseUrl}/articles/${slug}`);
+   
+       if (!response.ok) {
+         throw new Error('Server Error!');
+       }
+       const data = await response.json();
+   
+       return data;
    }
 }

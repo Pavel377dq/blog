@@ -5,6 +5,8 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit'
 import articleListReducer from './redux/store/articleListSlice'
+import articleSlice from './redux/store/articleSlice';
+import { BrowserRouter } from 'react-router-dom';
 //import reducer from './redux/store/articleListSlice'
 //import { createStore, applyMiddleware } from 'redux';
 //import { reducerArticles } from './redux/redusers/reducerArticles';
@@ -15,12 +17,15 @@ import articleListReducer from './redux/store/articleListSlice'
 const store = configureStore({
 
   reducer: {
-    articleList: articleListReducer}})
+    articleList: articleListReducer,
+    article: articleSlice}})
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
  // <React.StrictMode>
     <Provider store={store}>
+      <BrowserRouter>
       <App />
+      </BrowserRouter>
     </Provider>
   //</React.StrictMode>
 );

@@ -4,6 +4,8 @@ import emptyHeart from "./emptyHeart.svg";
 //import profileDefault from "./profileDefault.svg";
 import {format} from "date-fns"
 import { Tag } from "antd";
+import { Link } from 'react-router-dom';
+
 export const ListElement = ({author, createdAt, description, tagList, favoritesCount, slug, title}) => {
 
   const tags = tagList?tagList.map((item)=>{
@@ -16,7 +18,7 @@ export const ListElement = ({author, createdAt, description, tagList, favoritesC
     <div className={styles.element}>
       <div className={styles.wrap}>
         <div className={styles.title}>
-          <h1 className={styles.header}>{title} </h1>
+          <Link to={`/articles/${slug}`} className={styles.header}>{title} </Link>
           <img src={emptyHeart} className={styles.like} alt="non active like" />
           <span className={styles.count}>{favoritesCount}</span>
         </div>
