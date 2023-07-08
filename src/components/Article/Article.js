@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import {  fetchArticle, selectArticle, selectError, selectStatus } from '../../redux/store/articleSlice';
 import { Spin,Alert } from "antd";
-
+import styles from './Article.module.scss'
 
 
 export const Article = () =>{
@@ -28,7 +28,7 @@ export const Article = () =>{
   
  if(status === 'pending'){
 
-   return  <Spin size="large" />
+   return  <div className={styles.spin}><Spin  size="large" /></div>
  }
 
  if(status === 'rejected'){
@@ -36,9 +36,9 @@ export const Article = () =>{
  }
 
    return (
-      <div>
+      <div className={styles.wrap}>
          <ListElement {...article}></ListElement>
-         <ReactMarkdown children={body}/>
+         <ReactMarkdown className={styles.markdown} children={body}/>
       </div>
    )
 }

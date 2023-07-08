@@ -18,7 +18,7 @@ export const ListElement = ({author, createdAt, description, tagList, favoritesC
     <div className={styles.element}>
       <div className={styles.wrap}>
         <div className={styles.title}>
-          <Link to={`/articles/${slug}`} className={styles.header}>{title} </Link>
+          <Link to={`/articles/${slug}`} className={styles.link}>{title} </Link>
           <img src={emptyHeart} className={styles.like} alt="non active like" />
           <span className={styles.count}>{favoritesCount}</span>
         </div>

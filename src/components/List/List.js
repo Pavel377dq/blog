@@ -34,7 +34,7 @@ useEffect(()=>{
 
  if(status === 'pending'){
 
-   return  <Spin size="large" />
+   return   <div className={styles.spin}><Spin  size="large" /></div>
  }
 
  if(status === 'rejected'){
@@ -56,14 +56,14 @@ useEffect(()=>{
 
    const list = articles? articles.map((item)=>{
 
-      return <ListElement {...item}/>
+      return <div className={styles.element}><ListElement {...item}/></div>
    }):null;
    return (
 
       <div className={styles.list}>
 
         {list}
-      <Pagination current={page} onChange={handlerOnChangePage} 
+      <Pagination className={styles.pagination} current={page} onChange={handlerOnChangePage} 
       defaultPageSize={20}
       showSizeChanger={false} total={1000}/>
       </div>
