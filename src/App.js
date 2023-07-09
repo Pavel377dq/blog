@@ -2,6 +2,7 @@ import { List } from "./components/List/List"
 import { Article } from "./components/Article/Article";
 import styles from "./App.module.scss"
 import { Route, Routes } from 'react-router-dom';
+import { RegisterForm } from "./components/RegisterForm/RegisterForm";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         </div>
       </div>
 
+      <RegisterForm/>
       <Routes>
           <Route path="/" element={<List />} />
           <Route path="/articles" element={<List />} />

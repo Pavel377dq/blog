@@ -5,6 +5,12 @@
   /* Путь к файлу со шрифтом */
 }
 
+
+@font-face {
+  font-family: Roboto;
+  src: url("./fonts/Roboto/Roboto-Regular.ttf");
+}
+
 body {
   
   box-sizing: border-box;
