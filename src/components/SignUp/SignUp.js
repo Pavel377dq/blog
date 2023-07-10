@@ -1,10 +1,10 @@
 import React from "react";
-import styles from "./RegisterForm.module.scss"
+import styles from "./SignUp.module.scss"
 import { Link } from "react-router-dom";
 import {  useForm } from 'react-hook-form';
 import Input from "../Input/Input";
 
-export const RegisterForm = () => {
+export const SignUp = () => {
   
   const {
     register,
@@ -89,7 +89,7 @@ export const RegisterForm = () => {
       <div className={styles["button-wrap"]}>
         <button className={styles.button}>Create</button>
       </div>
-      <div className={styles["small-text"]}>Already have an account? <Link className={styles.link}>Sign in</Link></div>
+      <div className={styles["small-text"]}>Already have an account? <Link to="/sign-in" className={styles.link}>Sign in</Link></div>
     </form>
   );
 };
