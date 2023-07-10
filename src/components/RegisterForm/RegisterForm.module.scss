@@ -37,17 +37,6 @@
  
   }
 
-  .input{
-   width: 320px;
-   height: 40px;
-   border: 2px solid #BFBFBF ;
-   border-radius: 4px;
-   padding-left: 12px;
-   color: #BFBFBF;
-   display: block;
-   margin: 0 auto;
-  }
-
 
   .button{
    border: none; outline: none; 
@@ -75,15 +64,6 @@
    line-height: 20px;
    font-size: 12px;
   }
-  .designation{
-
-   color:#262626;
-   font-weight: 400;
-   line-height: 22px;
-   font-size: 14px;
-   display: block;
-   margin-left: 32px;
-  }
 
   .wrap{
    background-color: #FFFFFF;
@@ -102,23 +82,4 @@
    margin: 30px auto;
    margin-bottom: 20px;
    width:fit-content;
-}
-
-.wrap-input{
-   margin-bottom: 10px;
-}
-
-
-.warning-password{
-   color: #F5222D;
-   background-color: black;
-   width: 50px;
-   height: 20px;
-   //content: 'Your password needs at least 6 charackters';
-   display: block;
-   font-size: 14px;
-   line-height: 22px;
-   margin-left: 32px;
-   margin-bottom: 10px;
-
 }

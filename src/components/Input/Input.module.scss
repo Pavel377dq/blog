@@ -1,0 +1,52 @@
+
+.wrapp {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+ }
+ 
+ .label {
+   font-weight: 400;
+   margin-top: 10px;
+   margin-left: 32px;
+ }
+ 
+ .input {
+   width: 320px;
+   margin: 0 auto;
+   margin-top: 5px;
+   padding: 7px 12px;
+   border-radius: 5px;
+   border: 1px solid #BFBFBF;
+ 
+   &::placeholder {
+     color: #BFBFBF;
+   }
+ 
+   &:focus {
+     outline: 1px solid #1890ff;
+   }
+ 
+ }
+ 
+ .inputError {
+   border-color: red;
+ 
+   &:focus {
+     outline-color: red;
+   }
+ }
+ 
+ .error {
+   margin-left: 32px;
+   display: flex;
+   align-items: flex-end;
+   height: 15px;
+   font-size: 10px;
+   color: red;
+ }
+ 
+ .textarea {
+   min-height: 170px;
+   resize: vertical;
+ }

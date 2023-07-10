@@ -1,56 +1,80 @@
 import React from "react";
 import styles from "./RegisterForm.module.scss"
 import { Link } from "react-router-dom";
+import {  useForm } from 'react-hook-form';
+import Input from "../Input/Input";
+
 export const RegisterForm = () => {
-   const passwordWrap = [styles["wrap-input"]];
-   const repPasswordStyle = [styles["wrap-input"]]
-   let isLenOk = false;
-   let BeforeInputPassword = true;
-   const handlerPassword = (evt) =>{
-      if(BeforeInputPassword){
-         BeforeInputPassword = false;
-      }
+  
+  const {
+    register,
+    //handleSubmit,
+    formState: { errors },
+   // setError,
+  } = useForm({
+    mode: 'onBlur',
+  });
 
-      if(evt.target.value.length < 6){
-         console.log(evt.target.value.length ,'evt.target.value.length ')
-         isLenOk = false;
-      }
-      else{
-         isLenOk = true;
-      }
 
-      if(!BeforeInputPassword && !isLenOk){
-         console.log(passwordWrap,'passwordWrap')
-         passwordWrap.push(styles["warning-password"]);
-      }
-
-   }
-
-   
   return (
-    <div className={styles.wrap}>
+    <form className={styles.wrap}>
       <h3 className={styles.title}>Create new account</h3>
-      <div className={styles["wrap-input"]}>
-        <label className={styles.designation} for="name">Username</label>
-        <input className={styles.input} name="name" id="name" placeholder="Username" />
-      </div>
-      <div className={styles["wrap-input"]}>
-        <label className={styles.designation} for="adress">Email address</label>
-        <input className={styles.input} name="adress" id="adress" placeholder="Email address" />
-      </div>
-      <div className={passwordWrap.join(' ')}>
-        <label className={styles.designation} for="password">Password</label>
-        <input onChange={handlerPassword}  type="password" className={styles.input} name="password" id="password" placeholder="Password" />
-      </div>
-      <div className={styles["wrap-input"]}>
-        <label className={styles.designation} for="repeat-password">Repeat Passowrd</label>
-        <input className={styles.input}
+      <Input
+        autofocus
+        label="Username"
+        placeholder="Username"
+        error={errors.username}
+        options={register('username', {
+          required: 'The field must be filled in',
+          minLength: {
+            value: 3,
+            message: 'The user name needs to be at least 3 characters.',
+          },
+          maxLength: {
+            value: 20,
+            message: 'The user name must contain no more than 20 characters.',
+          },
+        })}
+      />
+      <Input
+        label="Email address"
+        placeholder="Email address"
+        error={errors.email}
+        options={register('email', {
+          required: 'The field must be filled in',
+          pattern: {
+            value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
+            message: 'The email must be valid',
+          },
+        })}
+      />
+      <Input
+        label="Password"
+        placeholder="Password"
         type="password"
-          name="repeat-password"
-          id="repeat-password"
-          placeholder="Repeat Passowrd"
-        />
-      </div>
+        error={errors.password}
+        options={register('password', {
+          required: 'The field must be filled in',
+          minLength: {
+            value: 6,
+            message: 'Your password needs to be at least 6 characters.',
+          },
+          maxLength: {
+            value: 40,
+            message: 'Your password must contain no more than 40 characters.',
+          },
+        })}
+      />
+      <Input
+        label="Repeat Password"
+        placeholder="Password"
+        type="password"
+        error={errors.repeatPassword}
+        options={register('repeatPassword', {
+          required: 'The field must be filled in',
+          validate: (val, formValues) => formValues.password === val || 'Your passwords do no match',
+        })}
+      />
       <div className={styles["checkbox-wrap"]}>
         <input
           type="checkbox"
@@ -66,6 +90,6 @@ export const RegisterForm = () => {
         <button className={styles.button}>Create</button>
       </div>
       <div className={styles["small-text"]}>Already have an account? <Link className={styles.link}>Sign in</Link></div>
-    </div>
+    </form>
   );
 };
