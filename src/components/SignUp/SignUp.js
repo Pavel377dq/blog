@@ -3,21 +3,54 @@ import styles from "./SignUp.module.scss"
 import { Link } from "react-router-dom";
 import {  useForm } from 'react-hook-form';
 import Input from "../Input/Input";
+import { useDispatch, useSelector } from "react-redux";
+import { selectServerErrors, clearServerErrors, createAccount } from "../../redux/store/userSlice";
+import { useEffect } from "react";
+
 
 export const SignUp = () => {
+
+  const dispatch = useDispatch();
+  const serverErrors = useSelector(selectServerErrors);
+
   
   const {
     register,
-    //handleSubmit,
+    handleSubmit,
     formState: { errors },
-   // setError,
+    setError,
   } = useForm({
     mode: 'onBlur',
   });
 
+  useEffect(() => {
+    return () => {
+      dispatch(clearServerErrors());
+    };
+  }, []);
+
+  useEffect(() => {
+    if (serverErrors) {
+      Object.entries(serverErrors).forEach(([key, value]) => {
+        if (key === 'username' || key === 'email') {
+          const field = key;
+          setError(field, { type: 'serverError', message: `${value}` });
+        }
+      });
+    }
+  }, [serverErrors]);
+
+  const onSubmit = (data) => {
+    const newUser = {
+      username: data.username,
+      email: data.email,
+      password: data.password,
+    };
+    dispatch(createAccount(newUser));
+  };
 
   return (
-    <form className={styles.wrap}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.wrap}>
       <h3 className={styles.title}>Create new account</h3>
       <Input
         autofocus
@@ -87,7 +120,7 @@ export const SignUp = () => {
         <label htmlFor="1">I agree to processing my personal information</label>
       </div>
       <div className={styles["button-wrap"]}>
-        <button className={styles.button}>Create</button>
+        <button  type="submit" className={styles.button}>Create</button>
       </div>
       <div className={styles["small-text"]}>Already have an account? <Link to="/sign-in" className={styles.link}>Sign in</Link></div>
     </form>

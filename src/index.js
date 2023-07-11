@@ -7,6 +7,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import articleListReducer from './redux/store/articleListSlice'
 import articleSlice from './redux/store/articleSlice';
 import { BrowserRouter } from 'react-router-dom';
+import  userSlice  from './redux/store/userSlice';
 //import reducer from './redux/store/articleListSlice'
 //import { createStore, applyMiddleware } from 'redux';
 //import { reducerArticles } from './redux/redusers/reducerArticles';
@@ -18,8 +19,14 @@ const store = configureStore({
 
   reducer: {
     articleList: articleListReducer,
-    article: articleSlice}})
+    article: articleSlice,
+    account: userSlice
+  }
+
+})
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
  // <React.StrictMode>
     <Provider store={store}>
