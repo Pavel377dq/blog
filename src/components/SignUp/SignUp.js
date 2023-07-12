@@ -8,7 +8,7 @@ import { selectServerErrors, clearServerErrors, createAccount } from "../../redu
 import { useEffect } from "react";
 
 
-export const SignUp = () => {
+export function SignUp()  {
 
   const dispatch = useDispatch();
   const serverErrors = useSelector(selectServerErrors);
@@ -40,6 +40,7 @@ export const SignUp = () => {
     }
   }, [serverErrors]);
 
+  console.log(errors.agree,errors.agree?.message,'errors.agree errors.agree.message')
   const onSubmit = (data) => {
     const newUser = {
       username: data.username,
@@ -111,14 +112,15 @@ export const SignUp = () => {
       <div className={styles["checkbox-wrap"]}>
         <input
           type="checkbox"
-         
+          id='agree'
           className={styles["custom-checkbox"]}
-          id="1"
-          name="IsAgree"
-          value=""
+          {...register('agree', {
+            required: 'You should agree',
+          })}
         />
-        <label htmlFor="1">I agree to processing my personal information</label>
+        <label htmlFor='agree'>I agree to processing my personal information</label>
       </div>
+      <div className={styles.errorAgree}>{errors.agree && errors.agree.message}</div>
       <div className={styles["button-wrap"]}>
         <button  type="submit" className={styles.button}>Create</button>
       </div>

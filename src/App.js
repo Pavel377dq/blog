@@ -8,6 +8,7 @@ import { Header } from "./components/Header/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { selectIsCurentUserLoading, getCurrentUser  } from "./redux/store/userSlice";
+import { EditForm } from "./components/EditForm/EditForm";
 
 function App() {
   
@@ -39,6 +40,10 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/sign-in" element={<SignIn/>} />
         </Route >
+        <Route element={<DefendedWrapper redirectPath="/sign-in"/>}>
+          <Route path="/profile" element={<EditForm />} />
+
+        </Route>
       </Routes>
     </div>
     

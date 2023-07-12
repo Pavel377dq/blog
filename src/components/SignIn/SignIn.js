@@ -3,21 +3,42 @@ import Input from "../Input/Input";
 import { useForm } from "react-hook-form";
 import styles from './SignIn.module.scss';
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { loginAccount,clearServerErrors, selectServerErrors } from "../../redux/store/userSlice";
+import { Alert } from "antd";
 
 export const SignIn = ()=>{
 
-
+const dispatch = useDispatch();
+const serverErrors =useSelector(selectServerErrors)
    const {
       register,
-     // handleSubmit,
+      handleSubmit,
       formState: { errors },
     } = useForm({
       mode: 'onBlur',
     });
 
+     // eslint-disable-next-line arrow-body-style
+  useEffect(() => {
+    return () => {
+      dispatch(clearServerErrors());
+    };
+  }, []);
+
+  const onSubmit= (data) => {
+    dispatch(loginAccount(data));
+  };
+
 
    return(
-      <form className={styles.wrap}>
+    <div className={styles.signIn}>
+      {serverErrors && (
+        <Alert className={styles.serverError} message="Error: email or password is invalid" type="error" showIcon />
+      )}
+
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.wrap}>
          <h3 className={styles.title}>Sign In</h3>
          <Input
         autofocus
@@ -48,5 +69,6 @@ export const SignIn = ()=>{
       <div className={styles["small-text"]}>Dont have an account? <Link to="/sign-up" className={styles.link}>Sign Up</Link></div>
    
       </form>
+      </div>
    )
 }

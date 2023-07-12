@@ -47,4 +47,16 @@
    width:fit-content;
 }
 
+.signIn{
+   position: relative;
+}
 
+.serverError{
+   width: 384px;
+   height: 25px;
+   margin: 0 auto;
+   position: absolute;
+   top: -30px;
+   left: 50%;
+   margin-left: -192px;
+}

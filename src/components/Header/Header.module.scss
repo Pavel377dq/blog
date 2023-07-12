@@ -15,31 +15,46 @@
    margin-left:22px;
    font-size: 18px;
    line-height: 28px;
-   font-weight: 500;
+   font-weight: 600;
+   
 }
 
 .in{
+ 
+  border-radius: 5px;
    width: 109px;
    height: 51px;
    background-color: white;
    border: none; outline: none;
    margin-right: 22px;
    margin-top: 16px;
+   &:hover{
+    background-color: #1890FF;
+    color:white;
+   }
+  
 }
 
 .up{ width: 109px;
    height: 51px;
    background-color: white;
-   border: none; outline: none;
+   border: none;
+
+   outline: none;
    border: 1px solid #52C41A;
    border-radius: 5px;
    color: #52C41A;
    margin-right: 22px;
    margin-top: 16px;
+   &:hover{
+    background-color: $success-color;
+    color:white;
+   }
 }
 
 
 .logo {
+ 
    margin: 0;
    font-size: 18px;
    font-style: normal;
@@ -47,7 +62,7 @@
    font-size: 18px;
    line-height: 28px;
  
-   &__link {
+   &-link {
      color: $heading-color;
      text-decoration: none;
    }
@@ -61,14 +76,19 @@
  
  .button {
    font-family: inherit;
-   font-size: 18px;
-   height: auto;
  }
  
- .buttonSingUp,
- .buttonCreateAticle {
+ 
+ .buttonCreateArticle {
    border-color: $success-color;
    color: $success-color;
+   width: 112px;
+   height: 32px;
+   font-size: 14px;
+   line-height: 22px;
+   border-radius: 5px;
+   background-color: white;
+   margin-right: 20px;
  
    &:hover {
      background-color: $success-color;
@@ -76,10 +96,19 @@
      color: #fff !important;
    }
  }
+
+
  
  .buttonLogout {
    border-color: rgba(85, 84, 84, 0.56);
    color: rgba(85, 84, 84, 0.56);
+   width: 109px;
+   height: 51px;
+   font-size: 18px;
+   line-height: 28px;
+   background-color: white;
+   border-radius: 5px;
+   margin-right: 20px;
  
    &:hover {
      border-color: $heading-color !important;
@@ -91,15 +120,13 @@
    display: flex;
    align-items: center;
    gap: 10px;
+   margin-right: 20px;
  }
  
  .userName {
    color: $heading-color;
    text-decoration: none;
  
-   &:hover {
-     text-decoration: underline;
-   }
  }
  
  .userAvatar {
@@ -110,4 +137,9 @@
    width: 46px;
    height: 46px;
    border-radius: 50%;
+ }
+
+ .logged-info{
+  display: flex;
+  align-items: center;
  }

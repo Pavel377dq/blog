@@ -22,12 +22,14 @@ export const Header = ()=>{
    return (
    <div className={styles.header}>
       <div className={styles.wrap}>
-      <h3 className={styles.title}>Realworld Blog</h3> 
+      <h3 className={styles.title}>
+        
+      <Link to="/" className={styles['logo-link']}>Realworld Blog</Link></h3> 
       {!isCurentUserLoading &&
          (isLogin ? (
-           <>
+           <div className={styles['logged-info']}>
              <button
-               className={`${styles.button} ${styles.buttonCreateAticle}`}
+               className={`${styles.button} ${styles.buttonCreateArticle}`}
                size="small"
                onClick={() => navigate('/new-article')}
              >
@@ -51,7 +53,7 @@ export const Header = ()=>{
              <button className={`${styles.button} ${styles.buttonLogout}`} onClick={() => dispatch(logout())}>
                Log Out
              </button>
-           </>
+           </div>
          ):(
 
       
