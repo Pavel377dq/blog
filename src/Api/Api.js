@@ -5,7 +5,11 @@ export const api = {
    token: '',
 
    async getArticles(count = 0){
-      const  response  = await fetch(`${this.baseUrl}/articles?offset=${count}`);
+      const  response  = await fetch(`${this.baseUrl}/articles?offset=${count}`, {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        }
+      });
       //const {articles} = data;
 
       if (!response.ok) {
@@ -20,7 +24,11 @@ export const api = {
    },
 
    async getArticle(slug){
-      const response = await fetch(`${this.baseUrl}/articles/${slug}`);
+      const response = await fetch(`${this.baseUrl}/articles/${slug}`, {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        }
+      });
    
        if (!response.ok) {
          throw new Error('Server Error!');
@@ -172,6 +180,40 @@ export const api = {
     if (!response.ok) {
       throw new Error('Server Error!');
     }
+  },
+
+  async favoriteArticle(slug) {
+    const response = await fetch(`${this.baseUrl}/articles/${slug}/favorite`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Server Error!');
+    }
+
+    const data = await response.json();
+
+    return data;
+  },
+
+  async unfavoriteArticle(slug) {
+    const response = await fetch(`${this.baseUrl}/articles/${slug}/favorite`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Server Error!');
+    }
+
+    const data = await response.json();
+
+    return data;
   }
  
 }

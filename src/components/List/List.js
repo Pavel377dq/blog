@@ -16,6 +16,7 @@ import {
    selectStatus,
    selectError
  } from '../../redux/store/articleListSlice';
+ import { selectIsLogin } from "../../redux/store/userSlice";
 
 export const List = () => {
 
@@ -24,11 +25,11 @@ export const List = () => {
    const status = useSelector(selectStatus);
    const error = useSelector(selectError);
    const dispatch = useDispatch();
-
+   const isLogin = useSelector(selectIsLogin);
    
 useEffect(()=>{
    dispatch(fetchArticles(page))
- },[page]);
+ },[page,isLogin]);
 
 
 
@@ -55,8 +56,8 @@ useEffect(()=>{
    console.log(articles,'IN LIST');
 
    const list = articles? articles.map((item)=>{
-
-      return <div className={styles.element}><ListElement {...item}/></div>
+      console.log(item,'item')
+      return <div className={styles.element} key={item.slug}><ListElement {...item}/></div>
    }):null;
    return (
 

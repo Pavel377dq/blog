@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from '../../Api/Api';
-
+import  {updateOneFavorited}  from './articleListSlice';
 
 export const fetchArticle = createAsyncThunk('article/fetchArticle', async (slug, { rejectWithValue }) => {
    try {
@@ -57,6 +57,36 @@ export const deleteArticle = createAsyncThunk(
   }
 );
 
+
+export const favoriteArticle = createAsyncThunk(
+  'article/favoriteArticle',
+  async (slug, { rejectWithValue, dispatch }) => {
+    try {
+      const data = await api.favoriteArticle(slug);
+      const { slug: id, favorited, favoritesCount } = data.article;
+      dispatch(updateOneFavorited({ id, changes: { favorited, favoritesCount } }));
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const unfavoriteArticle = createAsyncThunk(
+  'article/unfavoriteArticle',
+  async (slug, { rejectWithValue, dispatch }) => {
+    try {
+      const data = await api.unfavoriteArticle(slug);
+      const { slug: id, favorited, favoritesCount } = data.article;
+      dispatch(updateOneFavorited({ id, changes: { favorited, favoritesCount } }));
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
  
 const initialState = {
    article: {
@@ -127,6 +157,15 @@ export const articleSlice = createSlice({
     builder.addCase(deleteArticle.rejected, (state) => {
       state.error.delete = true;
       state.isLoading = false;
+    });
+    builder.addCase(favoriteArticle.fulfilled, (state) => {
+      console.log('favoriteArticle.fulfilledfavoriteArticle.fulfilledfavoriteArticle.fulfilledfavoriteArticle.fulfilled')
+      state.article.favorited = true;
+      state.article.favoritesCount += 1;
+    });
+    builder.addCase(unfavoriteArticle.fulfilled, (state) => {
+      state.article.favorited = false;
+      state.article.favoritesCount -= 1;
     });
    },
  });

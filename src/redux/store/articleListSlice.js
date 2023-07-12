@@ -33,6 +33,7 @@ export const fetchArticles = createAsyncThunk(
    name: 'articleList',
    initialState,
    reducers: {
+    updateOneFavorited: articlesAdapter.updateOne,
 
      setCurrentPage: (state, action) => {
        state.currentPage = action.payload;
@@ -65,6 +66,6 @@ export const selectStatus = (state) => state.articleList.status;
 export const selectError = (state) => state.articleList.error;
 export const selectCurrentPage = (state) => state.articleList.currentPage;
 
-export const { setCurrentPage } = articleListSlice.actions;
+export const { setCurrentPage, updateOneFavorited } = articleListSlice.actions;
 
 export default articleListSlice.reducer;
