@@ -12,7 +12,50 @@ export const fetchArticle = createAsyncThunk('article/fetchArticle', async (slug
  });
 
 
- 
+ export const createArticle = createAsyncThunk(
+  'article/createArticle',
+  async (
+    { newArticle, navigate },
+    { rejectWithValue }
+  ) => {
+    try {
+      const data = await api.createArticle(newArticle);
+      navigate('/articles');
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const updateArticle = createAsyncThunk(
+  'article/updateArticle',
+  async (
+    { newArticle, slug, navigate },
+    { rejectWithValue }
+  ) => {
+    try {
+      const data = await api.updateArticle(newArticle, slug);
+      navigate(`/articles/${data.article.slug}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteArticle = createAsyncThunk(
+  'article/deleteArticle',
+  async ({ slug, navigate }, { rejectWithValue }) => {
+    try {
+      const data = await api.deleteArticle(slug);
+      navigate('/');
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
  
 const initialState = {
@@ -34,7 +77,7 @@ const initialState = {
      },
    },
    status: null,
-   error: null
+   error: {}
  };
 
 
@@ -54,6 +97,37 @@ export const articleSlice = createSlice({
        state.error = `${action.payload}`;
        state.status = 'rejected';
      });
+     builder.addCase(createArticle.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(createArticle.fulfilled, (state, action) => {
+      state.article = action.payload.article;
+      state.isLoading = false;
+    });
+    builder.addCase(createArticle.rejected, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(updateArticle.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(updateArticle.fulfilled, (state, action) => {
+      state.article = action.payload.article;
+      state.isLoading = false;
+    });
+    builder.addCase(updateArticle.rejected, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(deleteArticle.pending, (state) => {
+      state.error.delete = false;
+      state.isLoading = true;
+    });
+    builder.addCase(deleteArticle.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(deleteArticle.rejected, (state) => {
+      state.error.delete = true;
+      state.isLoading = false;
+    });
    },
  });
  

@@ -123,6 +123,55 @@ export const api = {
       window.localStorage.setItem('token', this.token);
   
       return data;
+    },
+    
+  async createArticle(articleData) {
+    const response = await fetch(`${this.baseUrl}/articles`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: JSON.stringify({ article: articleData }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Server Error!');
     }
+    const data = await response.json();
+
+    return data;
+  },
+
+  async updateArticle(articleData, slug) {
+    const response = await fetch(`${this.baseUrl}/articles/${slug}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: JSON.stringify({ article: articleData }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Server Error!');
+    }
+    const data = await response.json();
+
+    return data;
+  },
+
+  async deleteArticle(slug) {
+    const response = await fetch(`${this.baseUrl}/articles/${slug}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Server Error!');
+    }
+  }
  
 }

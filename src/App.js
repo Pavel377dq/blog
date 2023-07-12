@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { selectIsCurentUserLoading, getCurrentUser  } from "./redux/store/userSlice";
 import { EditForm } from "./components/EditForm/EditForm";
+import { ArticleForm } from "./components/ArticleForm/ArticleForm";
 
 function App() {
   
@@ -42,9 +43,12 @@ function App() {
         </Route >
         <Route element={<DefendedWrapper redirectPath="/sign-in"/>}>
           <Route path="/profile" element={<EditForm />} />
-
+          <Route path="/new-article" element={<ArticleForm />} />
+          <Route path="/articles/:slug/edit" element={<ArticleForm editMode />} />
         </Route>
+        <Route path="*" element={<h2>Page doesnt exist</h2>} />
       </Routes>
+      
     </div>
     
   );
