@@ -1,6 +1,10 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { Offline } from 'react-detect-offline';
+import { Alert } from 'antd';
+import { WifiOutlined } from '@ant-design/icons';
 
 import  List  from './components/List/List';
 import  Article  from './components/Article/Article';
@@ -11,6 +15,7 @@ import  Header  from './components/Header/Header';
 import { selectIsCurentUserLoading, getCurrentUser } from './redux/store/userSlice';
 import  EditForm  from './components/EditForm/EditForm';
 import  ArticleForm  from './components/ArticleForm/ArticleForm';
+import styles from './App.module.scss';
 
 function App() {
     const isCurrentUserLoading = useSelector(selectIsCurentUserLoading);
@@ -28,6 +33,16 @@ function App() {
 
     return (
         <div>
+           <Offline>
+          <Alert
+            message="Offline"
+            description="you have to fix internet problems"
+            type="error"
+            showIcon
+            icon={<WifiOutlined />}
+            className={styles.offlineAlert}
+          />
+        </Offline>
             <Header />
             <Routes>
                 <Route path="/" element={<List />} />
