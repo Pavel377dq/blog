@@ -18,8 +18,12 @@ function Header() {
     const user = useSelector(selectUser);
     const isCurentUserLoading = useSelector(selectIsCurentUserLoading);
 
-    // const location = useLocation();
 
+    const outWithNav = () => {
+        navigate('/');
+        dispatch(logout());
+    };
+    
     return (
         <div className={styles.header}>
             <div className={styles.wrap}>
@@ -58,7 +62,7 @@ function Header() {
                             </div>
                             <button
                                 className={`${styles.button} ${styles.buttonLogout}`}
-                                onClick={() => dispatch(logout())}
+                                onClick={() => outWithNav()}
                                 type="button"
                             >
                                 Log Out

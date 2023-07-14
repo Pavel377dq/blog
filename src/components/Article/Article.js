@@ -54,7 +54,7 @@ import styles from './Article.module.scss';
     return (
         <div className={styles.wrap}>
             <ListElement item = {article} />
-            <ReactMarkdown className={styles.markdown} children={`${body.slice(0,2300)}...`} />
+            <ReactMarkdown className={styles.markdown} children={body.length>2300?`${body.slice(0,2300)}...`:body} />
             {author.username === currentUser.username && (
                 <>
                     {error?.delete && (
