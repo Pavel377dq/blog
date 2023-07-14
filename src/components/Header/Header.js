@@ -19,10 +19,7 @@ function Header() {
     const isCurentUserLoading = useSelector(selectIsCurentUserLoading);
 
 
-    const outWithNav = () => {
-        navigate('/');
-        dispatch(logout());
-    };
+   
     
     return (
         <div className={styles.header}>
@@ -62,7 +59,7 @@ function Header() {
                             </div>
                             <button
                                 className={`${styles.button} ${styles.buttonLogout}`}
-                                onClick={() => outWithNav()}
+                                onClick={() => dispatch(logout())}
                                 type="button"
                             >
                                 Log Out

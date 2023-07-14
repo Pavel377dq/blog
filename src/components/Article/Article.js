@@ -8,7 +8,7 @@ import { Spin, Alert, Popconfirm, Button } from 'antd';
 
 import  ListElement  from '../ListElement/ListElement';
 import { fetchArticle, selectArticle, selectError, selectStatus, deleteArticle } from '../../redux/store/articleSlice';
-import { selectUser } from '../../redux/store/userSlice';
+import { selectUser, selectIsLogin } from '../../redux/store/userSlice';
 
 import styles from './Article.module.scss';
 
@@ -19,7 +19,7 @@ import styles from './Article.module.scss';
     const article = useSelector(selectArticle);
     const error = useSelector(selectError);
     const status = useSelector(selectStatus);
-
+    const isLogin = useSelector(selectIsLogin);
     const currentUser = useSelector(selectUser);
     const { body, author } = article;
 
@@ -28,6 +28,12 @@ import styles from './Article.module.scss';
             dispatch(fetchArticle(slug));
         }
     }, [slug]);
+
+    
+
+    useEffect(() => {
+        dispatch(fetchArticle(slug));
+    }, [isLogin]);
 
     const onDelete = () => {
         dispatch(deleteArticle({ slug: article.slug, navigate }));
