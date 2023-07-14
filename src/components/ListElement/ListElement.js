@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { selectIsLogin } from '../../redux/store/userSlice';
 import { favoriteArticle, unfavoriteArticle } from '../../redux/store/articleSlice';
+import fullHeart from '../../assets/images/fullHeart.svg';
+import emptyHeart from '../../assets/images/emptyHeart.svg';
 
-import fullHeart from './fullHeart.svg';
-import emptyHeart from './emptyHeart.svg';
 import styles from './ListElement.module.scss';
 
 function  ListElement  ({item}) {
@@ -64,7 +64,7 @@ function  ListElement  ({item}) {
             </div>
             <div className={styles.tags}>{tags}</div>
 
-            <p className={styles.text}>{description} </p>
+            <p className={styles.text}>{sliceString(description,100)} </p>
         </div>
     );
 }

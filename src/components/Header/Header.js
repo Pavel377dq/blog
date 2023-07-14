@@ -6,9 +6,10 @@ import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import { logout, selectIsCurentUserLoading, selectIsLogin, selectUser } from '../../redux/store/userSlice';
+import avatar from '../../assets/images/defaultAvatar.svg';
 
 import styles from './Header.module.scss';
-import avatar from './defaultAvatar.svg';
+
 
 function Header() {
     const navigate = useNavigate();

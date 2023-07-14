@@ -1,3 +1,5 @@
+@import '../../assets/styles/varialiables.scss';
+
 .element {
    width: 938px;
    height: 140px;
@@ -7,7 +9,7 @@
 .link{
  line-height: 28px;
  font-size: 20px;
- color: #1890FF;
+ color: $primary-color;
  font-weight: 400;
  text-decoration: none;
 }

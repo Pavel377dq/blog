@@ -1,8 +1,9 @@
+@import '../../assets/styles/varialiables.scss';
 
 .button{
    border: none; outline: none; 
-   background-color: #1890FF;
-   color: #FFFFFF;
+   background-color: $primary-color;
+   color: white;
    height: 40px;
    width: 319px;
    border-radius: 4px;
@@ -16,7 +17,7 @@
   
   .link{
    text-decoration: none;
-   color: #1890FF;
+   color: $primary-color;
   }
 
 
@@ -28,12 +29,12 @@
   }
 
   .wrap{
-   background-color: #FFFFFF;
+   background-color: white;
    height: 374px;
    width: 384px;
    margin: 40px auto;
-   border: 1px solid #D9D9D9;
-   box-shadow: 0 1.5px 3px #000000;
+   border: 1px solid $border-color-base;
+   box-shadow: 0 1.5px 3px black;
    border-radius: 6px;
    font-family: Roboto;
   }

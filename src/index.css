@@ -1,7 +1,7 @@
 @font-face {
     font-family: Inter;
     /* Гарнитура шрифта */
-    src: url(./fonts/Inter-Light.ttf);
+    src: url(./fonts/Inter/Inter-Light.ttf);
     /* Путь к файлу со шрифтом */
 }
 

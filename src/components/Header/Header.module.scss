@@ -29,7 +29,7 @@
    margin-right: 22px;
    margin-top: 16px;
    &:hover{
-    background-color: #1890FF;
+    background-color: $primary-color;
     color:white;
    }
   
@@ -41,9 +41,9 @@
    border: none;
 
    outline: none;
-   border: 1px solid #52C41A;
+   border: 1px solid $success-color;
    border-radius: 5px;
-   color: #52C41A;
+   color: $success-color;
    margin-right: 22px;
    margin-top: 16px;
    &:hover{
@@ -93,7 +93,7 @@
    &:hover {
      background-color: $success-color;
      border-color: $success-color !important;
-     color: #fff !important;
+     color: white !important;
    }
  }
 

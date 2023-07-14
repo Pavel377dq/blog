@@ -36,6 +36,9 @@ import styles from './Article.module.scss';
         navigate(`/articles/${slug}/edit`);
     };
 
+    
+ 
+
     if (status === 'pending') {
         return (
             <div className={styles.spin}>
@@ -51,7 +54,7 @@ import styles from './Article.module.scss';
     return (
         <div className={styles.wrap}>
             <ListElement item = {article} />
-            <ReactMarkdown className={styles.markdown} children={body} />
+            <ReactMarkdown className={styles.markdown} children={`${body.slice(0,2300)}...`} />
             {author.username === currentUser.username && (
                 <>
                     {error?.delete && (

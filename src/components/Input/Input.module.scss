@@ -1,3 +1,4 @@
+@import '../../assets/styles/varialiables.scss';
 
 .wrapp {
    display: flex;
@@ -17,14 +18,14 @@
    margin-top: 5px;
    padding: 7px 12px;
    border-radius: 5px;
-   border: 1px solid #BFBFBF;
+   border: 1px solid $border-color-base;
  
    &::placeholder {
-     color: #BFBFBF;
+     color: $border-color-base;
    }
  
    &:focus {
-     outline: 1px solid #1890ff;
+     outline: 1px solid $processing-color;
    }
  
  }
