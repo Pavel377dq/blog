@@ -35,6 +35,8 @@ import styles from './Article.module.scss';
         dispatch(fetchArticle(slug));
     }, [isLogin]);
 
+    
+
     const onDelete = () => {
         dispatch(deleteArticle({ slug: article.slug, navigate }));
     };

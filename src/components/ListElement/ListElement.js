@@ -14,7 +14,7 @@ import emptyHeart from '../../assets/images/emptyHeart.svg';
 import styles from './ListElement.module.scss';
 
 function  ListElement  ({item}) {
-  const { author, createdAt, description, tagList, favoritesCount, favorited, slug, title } = item;
+  const {  author, createdAt, description, tagList, favoritesCount, favorited, slug, title } = item;
     const dispatch = useDispatch();
     const isLogin = useSelector(selectIsLogin);
 

@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 // import axios from "axios"
 
  const api = {
@@ -91,11 +92,12 @@
             },
         });
         const data = await response.json();
-
+        
         if (!response.ok) {
             throw data.errors;
         }
 
+       
         this.token = data.user.token;
         window.localStorage.setItem('token', this.token);
 

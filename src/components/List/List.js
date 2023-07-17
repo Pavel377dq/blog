@@ -56,8 +56,8 @@ import styles from './List.module.scss';
     const list = articles
         ? articles.map((item) => {
               return (
-                  <div className={styles.element} key={item.slug}>
-                      <ListElement item ={item} />
+                  <div className={styles.element}  key={`${item.slug}${item.author}${item.description}`} >
+                      <ListElement  item ={item} />
                   </div>
               );
           })

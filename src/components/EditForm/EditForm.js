@@ -10,15 +10,19 @@ import {
     selectServerErrors,
     editAccount,
     clearIsEditUserSuccess,
+    selectUser
 } from '../../redux/store/userSlice';
 import Input from '../Input/Input';
 
 import styles from './EditForm.module.scss';
 
+
+
  function EditForm() {
     const dispatch = useDispatch();
     const isEditUserSuccess = useSelector(selectIsEditUserSuccess);
     const serverErrors = useSelector(selectServerErrors);
+    const { username, email, image} = useSelector(selectUser);
 
     const {
         register,
@@ -29,6 +33,19 @@ import styles from './EditForm.module.scss';
     } = useForm({
         mode: 'onBlur',
     });
+
+    
+   
+
+    useEffect(() => {
+            setValue('username', username);
+            setValue('email', email);
+            setValue('imgUrl',image);
+    }, [username,email, image]);
+
+    
+
+   
 
     useEffect(() => {
         if (isEditUserSuccess) {
