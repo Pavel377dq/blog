@@ -23,10 +23,11 @@
    margin-left: 10px;
 }
 .profile{
+  
    margin-top: 15px;
    margin-right: 15px;
-   min-width: 160px;
-   max-width: 190px;
+   min-width: 10px;
+   max-width: 290px;
    height: 46px;
 display: grid;
 grid-template-areas: 'nameArea pic'
@@ -37,12 +38,14 @@ grid-template-areas: 'nameArea pic'
    grid-area: nameArea;
    line-height: 28px;
    font-size: 18px;
+
 }
 
 .date{
    grid-area:date;
    line-height: 22px;
    font-size: 12px;
+ 
 }
 
 .picture{
@@ -50,8 +53,11 @@ grid-template-areas: 'nameArea pic'
    width: 46px;
    height: 46px;
    border-radius: 50%;
+   margin-left: 5px;
+ 
 }
 .title{
+ 
    height: 28px;
    margin-top: 16px;
    margin-left: 16px;
