@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable spaced-comment */
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -21,8 +20,6 @@ import styles from './App.module.scss';
 function App() {
     const isCurrentUserLoading = useSelector(selectIsCurentUserLoading);
     const dispatch = useDispatch();
-
-    //const dispatchMemo = useCallback(()=> dispatch,[dispatch]);
 
     useEffect(() => {
         dispatch(getCurrentUser());
