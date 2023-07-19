@@ -52,7 +52,11 @@
         ],
         "newlines-between": "always"
       }
-    ]
+    ],
+    "react-hooks/exhaustive-deps": "off",
+    "jsx-a11y/label-has-associated-control":"off",
+    "react/jsx-props-no-spreading": "off"
+
   },
   "settings": {
     "import/resolver": {

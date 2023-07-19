@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-
 import s from './Input.module.scss';
 
 function Input({ label, placeholder, options, error, type = 'text', modeTextarea = false }) {
