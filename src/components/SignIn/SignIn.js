@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Alert } from 'antd';
+import { Alert, Button } from 'antd';
 
-// eslint-disable-next-line import/no-named-as-default
 import Input from '../Input/Input';
-import { loginAccount, clearServerErrors, selectServerErrors } from '../../redux/store/userSlice';
+import { loginAccount, clearServerErrors, selectServerErrors, selectIsLoading } from '../../redux/store/userSlice';
 
 import styles from './SignIn.module.scss';
 
 function SignIn() {
     const dispatch = useDispatch();
     const serverErrors = useSelector(selectServerErrors);
+    const isLoading = useSelector(selectIsLoading);
+    const clearServerErrorsMemo = useCallback(() => dispatch(clearServerErrors()), [dispatch]);
     const {
         register,
         handleSubmit,
@@ -21,13 +22,12 @@ function SignIn() {
         mode: 'onBlur',
     });
 
-    // eslint-disable-next-line arrow-body-style
-    useEffect(() => {
-        return () => {
-            dispatch(clearServerErrors());
-        };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    useEffect(
+        () => () => {
+            clearServerErrorsMemo();
+        },
+        [clearServerErrorsMemo]
+    );
 
     const onSubmit = (data) => {
         dispatch(loginAccount(data));
@@ -70,7 +70,9 @@ function SignIn() {
                     })}
                 />
                 <div className={styles['button-wrap']}>
-                    <button type="submit" className={styles.button}>Login</button>
+                    <Button htmlType="submit" className={styles.button} loading={isLoading}>
+                        Login
+                    </Button>
                 </div>
                 <div className={styles['small-text']}>
                     Dont have an account?{' '}

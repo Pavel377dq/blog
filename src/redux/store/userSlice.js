@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import  api  from '../../Api/Api';
+import api from '../../Api/Api';
 
 export const createAccount = createAsyncThunk('account/createAccount', async (newUser, { rejectWithValue }) => {
     try {
@@ -53,7 +53,7 @@ const initialState = {
     isLogin: false,
     isLoading: false,
     isEditUserSuccess: false,
-    isCurentUserLoading: false,
+    isCurentUserLoading: true,
     errors: null,
 };
 
@@ -70,7 +70,6 @@ export const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(createAccount.pending, (state) => {
-            
             state.errors = null;
             state.isLoading = true;
         });

@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-expressions */
 import React from 'react';
-// import profileDefault from "./profileDefault.svg";
 import { format } from 'date-fns';
 import { Tag } from 'antd';
 import { Link } from 'react-router-dom';
@@ -13,8 +11,8 @@ import emptyHeart from '../../assets/images/emptyHeart.svg';
 
 import styles from './ListElement.module.scss';
 
-function  ListElement  ({item}) {
-  const {  author, createdAt, description, tagList, favoritesCount, favorited, slug, title } = item;
+function ListElement({ item }) {
+    const { author, createdAt, description, tagList, favoritesCount, favorited, slug, title } = item;
     const dispatch = useDispatch();
     const isLogin = useSelector(selectIsLogin);
 
@@ -30,7 +28,11 @@ function  ListElement  ({item}) {
 
     const onLike = () => {
         if (!isLogin) return;
-        favorited ? dispatch(unfavoriteArticle(slug)) : dispatch(favoriteArticle(slug));
+        if (favorited) {
+            dispatch(unfavoriteArticle(slug));
+        } else {
+            dispatch(favoriteArticle(slug));
+        }
     };
 
     const createDate = format(new Date(createdAt), 'MMMM dd, yyyy');
@@ -64,7 +66,7 @@ function  ListElement  ({item}) {
             </div>
             <div className={styles.tags}>{tags}</div>
 
-            <p className={styles.text}>{sliceString(description,100)} </p>
+            <p className={styles.text}>{sliceString(description, 100)} </p>
         </div>
     );
 }

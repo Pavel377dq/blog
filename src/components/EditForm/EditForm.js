@@ -1,29 +1,21 @@
-/* eslint-disable import/no-named-as-default */
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import { Alert } from 'antd';
+import { Alert, Button } from 'antd';
 
 import {
     selectIsEditUserSuccess,
     selectServerErrors,
     editAccount,
     clearIsEditUserSuccess,
-    selectUser
+    selectUser,
+    selectIsLoading,
 } from '../../redux/store/userSlice';
 import Input from '../Input/Input';
 
 import styles from './EditForm.module.scss';
 
-
-
- function EditForm() {
-    const dispatch = useDispatch();
-    const isEditUserSuccess = useSelector(selectIsEditUserSuccess);
-    const serverErrors = useSelector(selectServerErrors);
-    const { username, email, image} = useSelector(selectUser);
-
+function EditForm() {
     const {
         register,
         handleSubmit,
@@ -34,27 +26,29 @@ import styles from './EditForm.module.scss';
         mode: 'onBlur',
     });
 
-    
-   
+    const dispatch = useDispatch();
+    const setValueMemo = useCallback((string, value) => setValue(string, value), [setValue]);
+    const clearIsEditSuccessMemo = useCallback(() => dispatch(clearIsEditUserSuccess()), [dispatch]);
+    const isEditUserSuccess = useSelector(selectIsEditUserSuccess);
+    const serverErrors = useSelector(selectServerErrors);
+    const isLoading = useSelector(selectIsLoading);
+
+    const { username, email, image } = useSelector(selectUser);
 
     useEffect(() => {
-            setValue('username', username);
-            setValue('email', email);
-            setValue('imgUrl',image);
-    }, [username,email, image]);
-
-    
-
-   
+        setValueMemo('username', username);
+        setValueMemo('email', email);
+        setValueMemo('imgUrl', image);
+    }, [setValueMemo, username, email, image]);
 
     useEffect(() => {
         if (isEditUserSuccess) {
-            setValue('newPassword', '');
+            setValueMemo('newPassword', '');
             setTimeout(() => {
-                dispatch(clearIsEditUserSuccess());
+                clearIsEditSuccessMemo();
             }, 3000);
         }
-    }, [isEditUserSuccess]);
+    }, [isEditUserSuccess, setValueMemo, clearIsEditSuccessMemo]);
 
     useEffect(() => {
         if (serverErrors) {
@@ -65,6 +59,7 @@ import styles from './EditForm.module.scss';
                 }
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [serverErrors]);
 
     const onSubmit = (data) => {
@@ -162,7 +157,9 @@ import styles from './EditForm.module.scss';
                 />
 
                 <div className={styles['button-wrap']}>
-                    <button type="submit" className={styles.button}>Save</button>
+                    <Button htmlType="submit" loading={isLoading} className={styles.button}>
+                        Save
+                    </Button>
                 </div>
             </form>
         </div>

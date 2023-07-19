@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import  api  from '../../Api/Api';
+import api from '../../Api/Api';
 
 import { updateOneFavorited } from './articleListSlice';
 
@@ -16,10 +16,10 @@ export const fetchArticle = createAsyncThunk('article/fetchArticle', async (slug
 
 export const createArticle = createAsyncThunk(
     'article/createArticle',
-    async ({ newArticle, navigate }, { rejectWithValue }) => {
+    async ({ newArticle, slug, navigate }, { rejectWithValue }) => {
         try {
             const data = await api.createArticle(newArticle);
-            navigate('/articles');
+            navigate(`/articles/${slug}`);
             return data;
         } catch (error) {
             return rejectWithValue(error);
@@ -103,6 +103,7 @@ const initialState = {
     },
     status: null,
     error: {},
+    isLoading: false,
 };
 
 export const articleSlice = createSlice({
@@ -153,7 +154,6 @@ export const articleSlice = createSlice({
             state.isLoading = false;
         });
         builder.addCase(favoriteArticle.fulfilled, (state) => {
-            
             state.article.favorited = true;
             state.article.favoritesCount += 1;
         });
@@ -167,5 +167,5 @@ export const articleSlice = createSlice({
 export const selectArticle = (state) => state.article.article;
 export const selectStatus = (state) => state.article.status;
 export const selectError = (state) => state.article.error;
-
+export const selectIsLoading = (state) => state.article.isLoading;
 export default articleSlice.reducer;

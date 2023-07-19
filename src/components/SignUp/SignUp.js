@@ -1,22 +1,17 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable import/no-named-as-default */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { Button } from 'antd';
 
 import Input from '../Input/Input';
-import { selectServerErrors, clearServerErrors, createAccount } from '../../redux/store/userSlice';
+import { selectServerErrors, clearServerErrors, createAccount, selectIsLoading } from '../../redux/store/userSlice';
 
 import styles from './SignUp.module.scss';
 
-
- function SignUp() {
-    const dispatch = useDispatch();
-    const serverErrors = useSelector(selectServerErrors);
-
+function SignUp() {
     const {
         register,
         handleSubmit,
@@ -26,13 +21,16 @@ import styles from './SignUp.module.scss';
         mode: 'onBlur',
     });
 
-
+    const dispatch = useDispatch();
+    const serverErrors = useSelector(selectServerErrors);
+    const isLoading = useSelector(selectIsLoading);
+    const clearServerErrorsMemo = useCallback(() => dispatch(clearServerErrors()), [dispatch]);
 
     useEffect(
         () => () => {
-            dispatch(clearServerErrors());
+            clearServerErrorsMemo();
         },
-        []
+        [clearServerErrorsMemo]
     );
 
     useEffect(() => {
@@ -44,6 +42,8 @@ import styles from './SignUp.module.scss';
                 }
             });
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [serverErrors]);
 
     const onSubmit = (data) => {
@@ -119,19 +119,18 @@ import styles from './SignUp.module.scss';
                     type="checkbox"
                     id="agree"
                     className={styles['custom-checkbox']}
-                    // eslint-disable-next-line react/jsx-props-no-spreading
                     {...register('agree', {
                         required: 'You should agree',
                     })}
                 />
-                
+
                 <label htmlFor="agree">I agree to processing my personal information</label>
             </div>
             <div className={styles.errorAgree}>{errors.agree && errors.agree.message}</div>
             <div className={styles['button-wrap']}>
-                <button type="submit" className={styles.button}>
+                <Button htmlType="submit" className={styles.button} loading={isLoading}>
                     Create
-                </button>
+                </Button>
             </div>
             <div className={styles['small-text']}>
                 Already have an account?{' '}

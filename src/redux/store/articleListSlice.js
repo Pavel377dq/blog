@@ -1,7 +1,8 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
-import  api  from '../../Api/Api';
+import api from '../../Api/Api';
 
 export const fetchArticles = createAsyncThunk('articleList/fetchArticles', async (page, { rejectWithValue }) => {
     try {
@@ -50,7 +51,6 @@ export const articleListSlice = createSlice({
 });
 
 export const { selectAll: selectAllArticles } = articlesAdapter.getSelectors((state) => state.articleList);
-// export const selectAllArticles = (state) => state.articleList.entities.articles
 export const selectArticlesCount = (state) => state.articleList.articlesCount;
 export const selectStatus = (state) => state.articleList.status;
 export const selectError = (state) => state.articleList.error;

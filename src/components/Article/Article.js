@@ -1,18 +1,24 @@
 /* eslint-disable react/no-children-prop */
-/* eslint-disable react-hooks/exhaustive-deps */
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Spin, Alert, Popconfirm, Button } from 'antd';
 
-import  ListElement  from '../ListElement/ListElement';
-import { fetchArticle, selectArticle, selectError, selectStatus, deleteArticle } from '../../redux/store/articleSlice';
+import ListElement from '../ListElement/ListElement';
+import {
+    fetchArticle,
+    selectArticle,
+    selectError,
+    selectStatus,
+    deleteArticle,
+    selectIsLoading,
+} from '../../redux/store/articleSlice';
 import { selectUser, selectIsLogin } from '../../redux/store/userSlice';
 
 import styles from './Article.module.scss';
 
- function Article() {
+function Article() {
     const navigate = useNavigate();
     const { slug } = useParams();
     const dispatch = useDispatch();
@@ -21,21 +27,15 @@ import styles from './Article.module.scss';
     const status = useSelector(selectStatus);
     const isLogin = useSelector(selectIsLogin);
     const currentUser = useSelector(selectUser);
+    const isLoading = useSelector(selectIsLoading);
+    const fetchArticleMemo = useCallback(() => dispatch(fetchArticle(slug)), [dispatch, slug]);
     const { body, author } = article;
 
     useEffect(() => {
         if (slug) {
-            dispatch(fetchArticle(slug));
+            fetchArticleMemo();
         }
-    }, [slug]);
-
-    
-
-    useEffect(() => {
-        dispatch(fetchArticle(slug));
-    }, [isLogin]);
-
-    
+    }, [slug, isLogin, fetchArticleMemo]);
 
     const onDelete = () => {
         dispatch(deleteArticle({ slug: article.slug, navigate }));
@@ -43,9 +43,6 @@ import styles from './Article.module.scss';
     const onEdit = () => {
         navigate(`/articles/${slug}/edit`);
     };
-
-    
- 
 
     if (status === 'pending') {
         return (
@@ -61,8 +58,12 @@ import styles from './Article.module.scss';
 
     return (
         <div className={styles.wrap}>
-            <ListElement item = {article} />
-            <ReactMarkdown className={styles.markdown} children={body.length>2300?`${body.slice(0,2300)}...`:body} />
+            <ListElement item={article} />
+
+            <ReactMarkdown
+                className={styles.markdown}
+                children={body?.length > 2300 ? `${body.slice(0, 2300)}...` : body}
+            />
             {author.username === currentUser.username && (
                 <>
                     {error?.delete && (
@@ -82,9 +83,11 @@ import styles from './Article.module.scss';
                             okText="Yes"
                             cancelText="No"
                         >
-                            <Button className={styles.buttonDelete}>Delete</Button>
+                            <Button className={styles.buttonDelete} loading={isLoading}>
+                                Delete
+                            </Button>
                         </Popconfirm>
-                        <Button className={styles.buttonEdit} onClick={onEdit}>
+                        <Button className={styles.buttonEdit} isLoading={isLoading} onClick={onEdit}>
                             Edit
                         </Button>
                     </div>

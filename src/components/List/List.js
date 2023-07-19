@@ -1,11 +1,8 @@
-/* eslint-disable arrow-body-style */
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { loadArticles, setPage } from "../../redux/actions";
 import { Pagination, Spin, Alert } from 'antd';
 
-import  ListElement  from '../ListElement/ListElement';
+import ListElement from '../ListElement/ListElement';
 import {
     fetchArticles,
     selectAllArticles,
@@ -14,21 +11,20 @@ import {
     selectStatus,
     selectError,
 } from '../../redux/store/articleListSlice';
-import { selectIsLogin } from '../../redux/store/userSlice';
 
 import styles from './List.module.scss';
 
- function List() {
+function List() {
     const articles = useSelector(selectAllArticles);
     const page = useSelector(selectCurrentPage);
     const status = useSelector(selectStatus);
     const error = useSelector(selectError);
     const dispatch = useDispatch();
-    const isLogin = useSelector(selectIsLogin);
+    const fetchArticlesMemo = useCallback(() => dispatch(fetchArticles(page)), [dispatch, page]);
 
     useEffect(() => {
-        dispatch(fetchArticles(page));
-    }, [page, isLogin]);
+        fetchArticlesMemo();
+    }, [fetchArticlesMemo]);
 
     if (status === 'pending') {
         return (
@@ -52,17 +48,14 @@ import styles from './List.module.scss';
         });
     };
 
-
     const list = articles
-        ? articles.map((item) => {
-              return (
-                  <div className={styles.element}  key={`${item.slug}${item.author}${item.description}`} >
-                      <ListElement  item ={item} />
-                  </div>
-              );
-          })
+        ? articles.map((item) => (
+              <div className={styles.element} key={`${item.slug}${item.author}${item.description}`}>
+                  <ListElement item={item} />
+              </div>
+          ))
         : null;
-        
+
     return (
         <div className={styles.list}>
             {list}

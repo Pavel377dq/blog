@@ -1,4 +1,3 @@
-/* eslint-disable import/no-named-as-default */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -8,26 +7,25 @@ import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
 import articleListReducer from './redux/store/articleListSlice';
-import articleSlice from './redux/store/articleSlice';
-import userSlice from './redux/store/userSlice';
+import articleSliceReducer from './redux/store/articleSlice';
+import userSliceReducer from './redux/store/userSlice';
 
 const store = configureStore({
     reducer: {
         articleList: articleListReducer,
-        article: articleSlice,
-        account: userSlice,
+        article: articleSliceReducer,
+        account: userSliceReducer,
     },
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-     <React.StrictMode>
-    <Provider store={store}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </Provider>
-     </React.StrictMode>
+    <React.StrictMode>
+        <Provider store={store}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </Provider>
+    </React.StrictMode>
 );
-

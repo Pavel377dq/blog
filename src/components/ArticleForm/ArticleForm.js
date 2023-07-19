@@ -1,26 +1,22 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { Button } from 'antd';
 
 import { selectUser } from '../../redux/store/userSlice';
-import { selectArticle, createArticle, fetchArticle, updateArticle } from '../../redux/store/articleSlice';
-// eslint-disable-next-line import/no-named-as-default
+import {
+    selectArticle,
+    createArticle,
+    fetchArticle,
+    updateArticle,
+    selectIsLoading,
+} from '../../redux/store/articleSlice';
 import Input from '../Input/Input';
 
 import styles from './ArticleForm.module.scss';
 
 function ArticleForm({ editMode }) {
-    const { slug: slugParam } = useParams();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const currentUser = useSelector(selectUser);
-    const article = useSelector(selectArticle);
-    const { title, description, body, tagList, author, slug } = article;
-
     const {
         control,
         register,
@@ -38,11 +34,22 @@ function ArticleForm({ editMode }) {
         mode: 'onBlur',
     });
 
+    const { slug: slugParam } = useParams();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const currentUser = useSelector(selectUser);
+    const article = useSelector(selectArticle);
+    const isLoading = useSelector(selectIsLoading);
+    const { title, description, body, tagList, author, slug } = article;
+
     const { fields, append, remove } = useFieldArray({
         control,
         name: 'tags',
     });
 
+    const appendMemo = useCallback((obj) => append(obj), [append]);
+    const removeMemo = useCallback(() => remove(), [remove]);
+    const setValueMemo = useCallback((string, value) => setValue(string, value), [setValue]);
     useEffect(() => {
         if (slugParam) {
             dispatch(fetchArticle(slugParam));
@@ -52,26 +59,28 @@ function ArticleForm({ editMode }) {
                 reset({}, { keepDefaultValues: true });
             }
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slugParam]);
 
     useEffect(() => {
         if (author.username && author.username !== currentUser.username && slugParam) {
             navigate(`/articles/${slugParam}`);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [author.username]);
 
     useEffect(() => {
         if (editMode) {
-            setValue('title', title);
-            setValue('description', description);
-            setValue('text', body);
-            remove();
+            setValueMemo('title', title);
+            setValueMemo('description', description);
+            setValueMemo('text', body);
+            removeMemo();
             tagList.forEach((tag) => {
-                append({ tag });
+                appendMemo({ tag });
             });
-            append({ tag: '' });
+            appendMemo({ tag: '' });
         }
-    }, [editMode, title, description, body, tagList]);
+    }, [editMode, title, description, body, tagList, appendMemo, removeMemo, setValueMemo]);
 
     const onSubmit = (data) => {
         const newArticle = {
@@ -86,9 +95,12 @@ function ArticleForm({ editMode }) {
                 newArticle.tagList.push(tag.trim());
             }
         });
-        editMode
-            ? dispatch(updateArticle({ newArticle, slug, navigate }))
-            : dispatch(createArticle({ newArticle, navigate }));
+
+        if (editMode) {
+            dispatch(updateArticle({ newArticle, slug, navigate }));
+        } else {
+            dispatch(createArticle({ newArticle, slug, navigate }));
+        }
     };
 
     return (
@@ -166,7 +178,7 @@ function ArticleForm({ editMode }) {
                     </div>
                 ))}
             </fieldset>
-            <Button className={styles.submit} htmlType="submit" type="primary">
+            <Button className={styles.submit} htmlType="submit" loading={isLoading} type="primary">
                 Send
             </Button>
         </form>

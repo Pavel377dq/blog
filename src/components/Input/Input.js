@@ -1,11 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
-// import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+
 import s from './Input.module.scss';
 
-export function Input({ label, placeholder, options, error, type = 'text', modeTextarea = false, autofocus = false }) {
-    // const options= UseFormRegisterReturn();
-    // const error =  FieldError | undefined;
-
+function Input({ label, placeholder, options, error, type = 'text', modeTextarea = false }) {
     const inputClass = error ? `${s.input} ${s.inputError}` : s.input;
 
     return (
@@ -18,15 +15,7 @@ export function Input({ label, placeholder, options, error, type = 'text', modeT
             {modeTextarea ? (
                 <textarea className={`${inputClass} ${s.textarea}`} id={label} placeholder={placeholder} {...options} />
             ) : (
-                <input
-                    className={inputClass}
-                    id={label}
-                    placeholder={placeholder}
-                    type={type}
-                    {...options}
-                    // eslint-disable-next-line jsx-a11y/no-autofocus
-                    autoFocus={autofocus}
-                />
+                <input className={inputClass} id={label} placeholder={placeholder} type={type} {...options} />
             )}
             <div className={s.error}>{error ? error.message || 'Error' : ''}</div>
         </div>

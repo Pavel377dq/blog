@@ -1,7 +1,4 @@
-/* eslint-disable spaced-comment */
-// import axios from "axios"
-
- const api = {
+const api = {
     baseUrl: 'https://blog.kata.academy/api',
     token: '',
 
@@ -11,7 +8,6 @@
                 Authorization: `Bearer ${this.token}`,
             },
         });
-        // const {articles} = data;
 
         if (!response.ok) {
             throw new Error('Server Error!');
@@ -19,8 +15,6 @@
         const data = await response.json();
 
         return data;
-        // console.log(articles);
-        // return articles;
     },
 
     async getArticle(slug) {
@@ -92,12 +86,11 @@
             },
         });
         const data = await response.json();
-        
+
         if (!response.ok) {
             throw data.errors;
         }
 
-       
         this.token = data.user.token;
         window.localStorage.setItem('token', this.token);
 
