@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Pagination, Spin, Alert } from 'antd';
 
@@ -11,6 +12,7 @@ import {
     selectStatus,
     selectError,
 } from '../../redux/store/articleListSlice';
+import { selectIsLogin } from '../../redux/store/userSlice';
 
 import styles from './List.module.scss';
 
@@ -19,12 +21,12 @@ function List() {
     const page = useSelector(selectCurrentPage);
     const status = useSelector(selectStatus);
     const error = useSelector(selectError);
+    const isLogin = useSelector(selectIsLogin);
     const dispatch = useDispatch();
-    const fetchArticlesMemo = useCallback(() => dispatch(fetchArticles(page)), [dispatch, page]);
 
     useEffect(() => {
-        fetchArticlesMemo();
-    }, [fetchArticlesMemo]);
+        dispatch(fetchArticles(page));
+    }, [page, isLogin]);
 
     if (status === 'pending') {
         return (

@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, useFieldArray } from 'react-hook-form';
@@ -47,9 +48,6 @@ function ArticleForm({ editMode }) {
         name: 'tags',
     });
 
-    const appendMemo = useCallback((obj) => append(obj), [append]);
-    const removeMemo = useCallback(() => remove(), [remove]);
-    const setValueMemo = useCallback((string, value) => setValue(string, value), [setValue]);
     useEffect(() => {
         if (slugParam) {
             dispatch(fetchArticle(slugParam));
@@ -59,28 +57,26 @@ function ArticleForm({ editMode }) {
                 reset({}, { keepDefaultValues: true });
             }
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slugParam]);
 
     useEffect(() => {
         if (author.username && author.username !== currentUser.username && slugParam) {
             navigate(`/articles/${slugParam}`);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [author.username]);
 
     useEffect(() => {
         if (editMode) {
-            setValueMemo('title', title);
-            setValueMemo('description', description);
-            setValueMemo('text', body);
-            removeMemo();
+            setValue('title', title);
+            setValue('description', description);
+            setValue('text', body);
+            remove();
             tagList.forEach((tag) => {
-                appendMemo({ tag });
+                append({ tag });
             });
-            appendMemo({ tag: '' });
+            append({ tag: '' });
         }
-    }, [editMode, title, description, body, tagList, appendMemo, removeMemo, setValueMemo]);
+    }, [editMode, title, description, body, tagList]);
 
     const onSubmit = (data) => {
         const newArticle = {
@@ -99,7 +95,7 @@ function ArticleForm({ editMode }) {
         if (editMode) {
             dispatch(updateArticle({ newArticle, slug, navigate }));
         } else {
-            dispatch(createArticle({ newArticle, slug, navigate }));
+            dispatch(createArticle({ newArticle, navigate }));
         }
     };
 

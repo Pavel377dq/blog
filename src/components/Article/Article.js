@@ -1,6 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Spin, Alert, Popconfirm, Button } from 'antd';
@@ -28,14 +28,14 @@ function Article() {
     const isLogin = useSelector(selectIsLogin);
     const currentUser = useSelector(selectUser);
     const isLoading = useSelector(selectIsLoading);
-    const fetchArticleMemo = useCallback(() => dispatch(fetchArticle(slug)), [dispatch, slug]);
     const { body, author } = article;
 
     useEffect(() => {
         if (slug) {
-            fetchArticleMemo();
+            dispatch(fetchArticle(slug));
         }
-    }, [slug, isLogin, fetchArticleMemo]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [slug, isLogin]);
 
     const onDelete = () => {
         dispatch(deleteArticle({ slug: article.slug, navigate }));

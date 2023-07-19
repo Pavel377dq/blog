@@ -16,10 +16,10 @@ export const fetchArticle = createAsyncThunk('article/fetchArticle', async (slug
 
 export const createArticle = createAsyncThunk(
     'article/createArticle',
-    async ({ newArticle, slug, navigate }, { rejectWithValue }) => {
+    async ({ newArticle, navigate }, { rejectWithValue }) => {
         try {
             const data = await api.createArticle(newArticle);
-            navigate(`/articles/${slug}`);
+            navigate(`/articles/${data.article.slug}`);
             return data;
         } catch (error) {
             return rejectWithValue(error);
