@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,13 +25,13 @@ function SignUp() {
     const dispatch = useDispatch();
     const serverErrors = useSelector(selectServerErrors);
     const isLoading = useSelector(selectIsLoading);
-    const clearServerErrorsMemo = useCallback(() => dispatch(clearServerErrors()), [dispatch]);
 
     useEffect(
         () => () => {
-            clearServerErrorsMemo();
+            dispatch(clearServerErrors());
         },
-        [clearServerErrorsMemo]
+
+        []
     );
 
     useEffect(() => {
@@ -42,8 +43,6 @@ function SignUp() {
                 }
             });
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [serverErrors]);
 
     const onSubmit = (data) => {

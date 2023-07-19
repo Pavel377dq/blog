@@ -28,7 +28,6 @@ function EditForm() {
 
     const dispatch = useDispatch();
     const setValueMemo = useCallback((string, value) => setValue(string, value), [setValue]);
-    const clearIsEditSuccessMemo = useCallback(() => dispatch(clearIsEditUserSuccess()), [dispatch]);
     const isEditUserSuccess = useSelector(selectIsEditUserSuccess);
     const serverErrors = useSelector(selectServerErrors);
     const isLoading = useSelector(selectIsLoading);
@@ -45,10 +44,11 @@ function EditForm() {
         if (isEditUserSuccess) {
             setValueMemo('newPassword', '');
             setTimeout(() => {
-                clearIsEditSuccessMemo();
+                dispatch(clearIsEditUserSuccess());
             }, 3000);
         }
-    }, [isEditUserSuccess, setValueMemo, clearIsEditSuccessMemo]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isEditUserSuccess]);
 
     useEffect(() => {
         if (serverErrors) {

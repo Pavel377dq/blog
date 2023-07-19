@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,6 @@ function SignIn() {
     const dispatch = useDispatch();
     const serverErrors = useSelector(selectServerErrors);
     const isLoading = useSelector(selectIsLoading);
-    const clearServerErrorsMemo = useCallback(() => dispatch(clearServerErrors()), [dispatch]);
     const {
         register,
         handleSubmit,
@@ -24,9 +23,10 @@ function SignIn() {
 
     useEffect(
         () => () => {
-            clearServerErrorsMemo();
+            dispatch(clearServerErrors());
         },
-        [clearServerErrorsMemo]
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []
     );
 
     const onSubmit = (data) => {
