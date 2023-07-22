@@ -1,44 +1,11 @@
-/* eslint-disable import/extensions */
-
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {NavigateFunction} from 'react-router-dom';
 
-import api,  { IArticleCreateData } from '../../Api/Api';
+import api from '../../Api/Api';
 
 import { updateOneFavorited } from './articleListSlice';
-import { RootState } from './store';
 
-export interface IArticle {
-    slug: string;
-    title: string;
-    description: string;
-    body: string;
-    tagList: string[];
-    createdAt: string;
-    updatedAt: string;
-    favorited: boolean;
-    favoritesCount: number;
-    author: {
-      username: string;
-      bio: string;
-      image: string;
-      following: boolean;
-    };
-  }
-  
-  export interface IArticleState {
-    article: IArticle;
-    isLoading: boolean;
-    error: {
-      get: null | string;
-      delete: boolean;
-    }| object| string;
-    status: null| string;
-  }
-  
-
-export const fetchArticle = createAsyncThunk('article/fetchArticle', async (slug:string, { rejectWithValue }) => {
+export const fetchArticle = createAsyncThunk('article/fetchArticle', async (slug, { rejectWithValue }) => {
     try {
         const data = await api.getArticle(slug);
         return data;
@@ -49,7 +16,7 @@ export const fetchArticle = createAsyncThunk('article/fetchArticle', async (slug
 
 export const createArticle = createAsyncThunk(
     'article/createArticle',
-    async ( { newArticle, navigate }: { newArticle: IArticleCreateData; navigate: NavigateFunction }, { rejectWithValue }) => {
+    async ({ newArticle, navigate }, { rejectWithValue }) => {
         try {
             const data = await api.createArticle(newArticle);
             navigate(`/articles/${data.article.slug}`);
@@ -62,7 +29,7 @@ export const createArticle = createAsyncThunk(
 
 export const updateArticle = createAsyncThunk(
     'article/updateArticle',
-    async ({ newArticle, slug, navigate } :{newArticle: IArticleCreateData, slug:string, navigate: NavigateFunction }, { rejectWithValue }) => {
+    async ({ newArticle, slug, navigate }, { rejectWithValue }) => {
         try {
             const data = await api.updateArticle(newArticle, slug);
             navigate(`/articles/${data.article.slug}`);
@@ -75,7 +42,7 @@ export const updateArticle = createAsyncThunk(
 
 export const deleteArticle = createAsyncThunk(
     'article/deleteArticle',
-    async ({ slug, navigate }:{ slug: string, navigate: NavigateFunction }, { rejectWithValue }) => {
+    async ({ slug, navigate }, { rejectWithValue }) => {
         try {
             const data = await api.deleteArticle(slug);
             navigate('/');
@@ -88,7 +55,7 @@ export const deleteArticle = createAsyncThunk(
 
 export const favoriteArticle = createAsyncThunk(
     'article/favoriteArticle',
-    async (slug: string, { rejectWithValue, dispatch }) => {
+    async (slug, { rejectWithValue, dispatch }) => {
         try {
             const data = await api.favoriteArticle(slug);
             const { slug: id, favorited, favoritesCount } = data.article;
@@ -103,7 +70,7 @@ export const favoriteArticle = createAsyncThunk(
 
 export const unfavoriteArticle = createAsyncThunk(
     'article/unfavoriteArticle',
-    async (slug: string, { rejectWithValue, dispatch }) => {
+    async (slug, { rejectWithValue, dispatch }) => {
         try {
             const data = await api.unfavoriteArticle(slug);
             const { slug: id, favorited, favoritesCount } = data.article;
@@ -116,7 +83,7 @@ export const unfavoriteArticle = createAsyncThunk(
     }
 );
 
-const initialState:  IArticleState = {
+const initialState = {
     article: {
         slug: '',
         title: '',
@@ -176,14 +143,14 @@ export const articleSlice = createSlice({
             state.isLoading = false;
         });
         builder.addCase(deleteArticle.pending, (state) => {
-            state.error = 'false';
+            state.error.delete = false;
             state.isLoading = true;
         });
         builder.addCase(deleteArticle.fulfilled, (state) => {
             state.isLoading = false;
         });
         builder.addCase(deleteArticle.rejected, (state) => {
-            state.error = 'true';
+            state.error.delete = true;
             state.isLoading = false;
         });
         builder.addCase(favoriteArticle.fulfilled, (state) => {
@@ -197,8 +164,8 @@ export const articleSlice = createSlice({
     },
 });
 
-export const selectArticle = (state: RootState) => state.article.article;
-export const selectStatus = (state: RootState) => state.article.status;
-export const selectError = (state: RootState) => state.article.error;
-export const selectIsLoading = (state: RootState) => state.article.isLoading;
+export const selectArticle = (state) => state.article.article;
+export const selectStatus = (state) => state.article.status;
+export const selectError = (state) => state.article.error;
+export const selectIsLoading = (state) => state.article.isLoading;
 export default articleSlice.reducer;

@@ -1,8 +1,7 @@
-/* eslint-disable spaced-comment */
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import api from '../../Api/Api.js';
+import api from '../../Api/Api';
 
 export const createAccount = createAsyncThunk('account/createAccount', async (newUser, { rejectWithValue }) => {
     try {
@@ -157,13 +156,6 @@ export const userSlice = createSlice({
         });
     },
 });
-/*
-,
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },*/
 
 export const { clearServerErrors, clearIsEditUserSuccess } = userSlice.actions;
 
@@ -175,4 +167,3 @@ export const selectIsCurentUserLoading = (state) => state.account.isCurentUserLo
 export const selectIsEditUserSuccess = (state) => state.account.isEditUserSuccess;
 
 export default userSlice.reducer;
-

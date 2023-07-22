@@ -1,29 +1,3 @@
-export interface ILoginData{
-    email: string,
-    password:string
-}
-
-
-export interface INewUser {
-    username: string;
-    email: string;
-    password: string;
-  }
-  
-  export interface INewUserData {
-    username?: string;
-    email?: string;
-    password?: string;
-    image?: string;
-  }
-  
-  export interface IArticleCreateData {
-    title: string;
-    description: string;
-    body: string;
-    tagList: string[];
-  }
-
 const api = {
     baseUrl: 'https://blog.kata.academy/api',
     token: '',
@@ -43,7 +17,7 @@ const api = {
         return data;
     },
 
-    async getArticle(slug: string) {
+    async getArticle(slug) {
         const response = await fetch(`${this.baseUrl}/articles/${slug}`, {
             headers: {
                 Authorization: `Bearer ${this.token}`,
@@ -58,7 +32,7 @@ const api = {
         return data;
     },
 
-    async createNewUserAccount(newUser: INewUser) {
+    async createNewUserAccount(newUser) {
         const response = await fetch(`${this.baseUrl}/users`, {
             method: 'POST',
             headers: {
@@ -78,7 +52,7 @@ const api = {
         return data;
     },
 
-    async login(loginData: ILoginData) {
+    async login(loginData) {
         const response = await fetch(`${this.baseUrl}/users/login`, {
             method: 'POST',
             headers: {
@@ -128,7 +102,7 @@ const api = {
         window.localStorage.removeItem('token');
     },
 
-    async editUserAccount(newUserData: INewUserData) {
+    async editUserAccount(newUserData) {
         const response = await fetch(`${this.baseUrl}/user`, {
             method: 'PUT',
             headers: {
@@ -149,7 +123,7 @@ const api = {
         return data;
     },
 
-    async createArticle(articleData: IArticleCreateData) {
+    async createArticle(articleData) {
         const response = await fetch(`${this.baseUrl}/articles`, {
             method: 'POST',
             headers: {
@@ -167,7 +141,7 @@ const api = {
         return data;
     },
 
-    async updateArticle(articleData: IArticleCreateData, slug: string) {
+    async updateArticle(articleData, slug) {
         const response = await fetch(`${this.baseUrl}/articles/${slug}`, {
             method: 'PUT',
             headers: {
@@ -185,7 +159,7 @@ const api = {
         return data;
     },
 
-    async deleteArticle(slug: string) {
+    async deleteArticle(slug) {
         const response = await fetch(`${this.baseUrl}/articles/${slug}`, {
             method: 'DELETE',
             headers: {
@@ -198,7 +172,7 @@ const api = {
         }
     },
 
-    async favoriteArticle(slug: string) {
+    async favoriteArticle(slug) {
         const response = await fetch(`${this.baseUrl}/articles/${slug}/favorite`, {
             method: 'POST',
             headers: {
@@ -215,7 +189,7 @@ const api = {
         return data;
     },
 
-    async unfavoriteArticle(slug: string) {
+    async unfavoriteArticle(slug) {
         const response = await fetch(`${this.baseUrl}/articles/${slug}/favorite`, {
             method: 'DELETE',
             headers: {
