@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
-import api from '../../Api/Api';
+import api from '../../Api/Api.ts';
 
 export const fetchArticles = createAsyncThunk('articleList/fetchArticles', async (page, { rejectWithValue }) => {
     try {
