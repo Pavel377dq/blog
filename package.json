@@ -8,6 +8,8 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
     "antd": "^5.6.4",
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
@@ -24,6 +26,7 @@
     "redux-thunk": "^2.4.2",
     "reselect": "^4.1.8",
     "sass": "^1.63.6",
+    "typescript-eslint": "0.0.1-alpha.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -57,7 +60,7 @@
   "devDependencies": {
     "@babel/core": "^7.21.8",
     "@babel/eslint-parser": "^7.21.8",
-    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-react": "^7.22.5",
     "eslint": "^8.42.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.8.0",
@@ -66,14 +69,12 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "flow": "^0.2.3",
     "husky": "^4.0.3",
     "lint-staged": "^13.2.2",
-    "prettier": "^2.8.8"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "plugin": "^0.3.3",
+    "prettier": "^2.8.8",
+    "typescript": "^5.1.6"
   },
   "lint-staged": {
     "*.js": [
@@ -83,3 +84,5 @@
     ]
   }
 }
+
+

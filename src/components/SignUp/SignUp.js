@@ -46,7 +46,7 @@ function SignUp() {
         const newUser = {
             username: data.username,
             email: data.email,
-            password: data.password,
+            password: data.password
         };
         dispatch(createAccount(newUser));
     };
